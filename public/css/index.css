@@ -27,13 +27,25 @@ body {
 
 .button {
     float: left;
+    padding: 15px 20px;
     background-color: #00003c;
     color: #c80818;
-    padding: 14px 16px;
+    border-radius: 5px;
     text-decoration: none;
     font-size: 1.3rem;
     border: none;
     cursor: pointer;
+    display: flex;
+    gap: 8px;
+}
+
+.button:hover {
+    background-color: #1c1d50;
+    border-radius: 8px;
+}
+
+#btn_Home {
+    margin-right: 20px;
 }
 
 .calendar {
