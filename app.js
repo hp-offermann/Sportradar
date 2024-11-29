@@ -11,6 +11,10 @@ app.get("/", function(req, res) {
     res.sendFile(path.join(__dirname, "/public/html/index.html"));
 })
 
+app.get("/addEvent", function(req, res) {
+    res.sendFile(path.join(__dirname, "/public/html/form.html"));
+})
+
 app.get("/detail", function(req, res) {
     res.sendFile(path.join(__dirname, "/public/html/detail.html"));
 })
