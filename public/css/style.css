@@ -1,51 +1,56 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 body {
-    font-family: Calibri, sans-serif;
-    background-color: white;
+    font-family: 'Calibri', sans-serif;
+    background-color: #121212;
     display: flex;
-    flex-direction: column;
+    justify-content: center;
     align-items: center;
-    overflow: hidden;
-    margin-top: 0;
+    margin-top: 5vh;
+    flex-direction: column;
 }
 
 .navbar {
-    text-align: center;
-    background: yellow;
-    color: white;
-    padding: 4vh 50vw;
-    margin-bottom: 5vh;
+    background-color: #3f3f3f;
+    padding: 30px;
+    width: 100%;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    max-width: 800px;
 }
 
 .calendar {
-    border-radius: 1rem;
+    width: 100%;
+    max-width: 800px;
+    border-radius: 10px;
     overflow: hidden;
-    width: 90%;
-    max-width: 100vw;
 }
 
 .header {
+    background-color: #282828;
+    color: #987add;
     text-align: center;
-    background: hotpink;
-    color: white;
-    padding: 2vh;
-    font-size: 3vh;
+    padding: 20px;
+    font-size: 2rem;
     font-weight: bold;
 }
 
 .days {
     display: flex;
-    background: blue;
-    border-bottom: 0.1rem solid white;
+    background-color: #3f3f3f;
+    color: #ad94e5;
+    font-weight: bold;
+    text-align: center;
 }
 
 .days div {
     flex: 1;
-    text-align: center;
-    padding: 2.5vh;
-    font-weight: bold;
-    font-size: 2vh;
-    color: black;
-    border-right: 0.1rem solid white;
+    padding: 15px;
+    border-right: 1px solid #282828;
 }
 
 .days div:last-child {
@@ -55,18 +60,26 @@ body {
 .flex-days {
     display: flex;
     flex-wrap: wrap;
-    background-color: green;
+    background-color: #717171;
 }
 
 .flex-days div {
     flex: 1 0 calc(100% / 7);
     text-align: center;
-    padding: 2.5vh;
-    border: 0.1rem solid white;
-    box-sizing: border-box;
-    display: flex;
-    align-items: center;
-    font-size: 2vh;
-    justify-content: center;
+    padding: 20px;
+    font-size: 1.2rem;
     cursor: pointer;
+    color: white;
+    border: 1px solid #3f3f3f;
 }
+
+.flex-days div:hover {
+    background-color: #ad94e5;
+}
+
+.no-date{
+    background-color: #575757;
+    pointer-events: none;
+}
+
+
