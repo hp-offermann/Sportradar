@@ -6,7 +6,7 @@
 
 body {
     font-family: 'Calibri', sans-serif;
-    background-color: #121212;
+    background-color: white;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -15,12 +15,14 @@ body {
 }
 
 .navbar {
-    background-color: #3f3f3f;
-    padding: 30px;
+    background-color: #00003c;
+    padding: 15px;
     width: 100%;
-    border-radius: 10px;
+    border-radius: 5px;
     margin-bottom: 20px;
     max-width: 800px;
+    font-size: 1.5rem;
+    color: white;
 }
 
 .calendar {
@@ -31,8 +33,8 @@ body {
 }
 
 .header {
-    background-color: #282828;
-    color: #987add;
+    background-color: #1c1d50;
+    color: white;
     text-align: center;
     padding: 20px;
     font-size: 2rem;
@@ -41,8 +43,8 @@ body {
 
 .days {
     display: flex;
-    background-color: #3f3f3f;
-    color: #ad94e5;
+    background-color: #383464;
+    color: white;
     font-weight: bold;
     text-align: center;
 }
@@ -60,25 +62,32 @@ body {
 .flex-days {
     display: flex;
     flex-wrap: wrap;
-    background-color: #717171;
+    background-color: #534e79;
 }
 
 .flex-days div {
     flex: 1 0 calc(100% / 7);
-    text-align: center;
-    padding: 20px;
-    font-size: 1.2rem;
+    text-align: left;
+    padding: 30px;
+    font-size: 1.3rem;
     cursor: pointer;
     color: white;
-    border: 1px solid #3f3f3f;
+    border: 1px solid #383464;
+}
+
+.flex-days div:last-child {
+    border-right: none;
 }
 
 .flex-days div:hover {
-    background-color: #ad94e5;
+    background-color: #c80818;
+    color: white;
+    font-weight: bold;
+    border: none;
 }
 
 .no-date{
-    background-color: #575757;
+    background-color: #1c1d50;
     pointer-events: none;
 }
 
