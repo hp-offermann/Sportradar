@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/index.css">
+    <link rel="stylesheet" href="../css/form.css">
     <title>Sportradar Calendar</title>
 </head>
 <body>
@@ -12,12 +13,18 @@
     <button class="button" id="btn_Event">Add Event</button>
 </div>
 
-<form id="addEvent">
-    <input type="text" placeholder="Sport">
-    <input type="date">
-    <input type="time">
-    <input type="text" placeholder="Teams">
-    <input type="text" placeholder="Place">
+<form id="addEvent" class="addEvent">
+    <div class="formInfo">
+        <p>Please fill out the form to add a new event to the calendar.</p>
+        <p>Sport and Date are required.</p>
+    </div>
+
+    <input class="input" name="sport" type="text" placeholder="Sport" required>
+    <input class="input" name="date" type="date" min="2024-11-01" max="2024-11-30" required>
+    <input class="input" name="time" type="time">
+    <input class="input" name="participants" type="text" placeholder="Participants">
+    <input class="input" name="place" type="text" placeholder="Place">
+    <button class="submitBtn" type="submit">Add Event</button>
 </form>
 
 <script src="../js/main.js"></script>
