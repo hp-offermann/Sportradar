@@ -2,6 +2,7 @@ const form = document.getElementById("addEvent");
 let newEvents = JSON.parse(localStorage.getItem('newEvents')) || [];
 const EventPage = document.getElementById('btn_Event');
 const HomePage = document.getElementById('btn_Home');
+const calendar = document.querySelector(".calendar");
 
 
 function fetchJSON () {
@@ -80,6 +81,14 @@ if(form){
         form.reset();
     });
 }
+
+
+calendar.addEventListener('click', function(event) {
+    if (event.target.classList.contains('viewEntry')) {
+        window.location.href = "/detail";
+    }
+});
+
 
 if(EventPage){
     EventPage.addEventListener('click', () => {
