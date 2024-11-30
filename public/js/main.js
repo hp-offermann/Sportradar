@@ -14,6 +14,10 @@ function fetchJSON () {
     }) .then((data) => {
         //console.log(data);
 
+        if (!localStorage.getItem('sportData')) {
+            localStorage.setItem('sportData', JSON.stringify(data.data));
+        }
+
         const calendar = document.querySelectorAll(".marker");
         const sportData = data.data;
 
@@ -82,12 +86,13 @@ if(form){
     });
 }
 
-
-calendar.addEventListener('click', function(event) {
-    if (event.target.classList.contains('viewEntry')) {
-        window.location.href = "/detail";
-    }
-});
+if(calendar){
+    calendar.addEventListener('click', function(event) {
+        if (event.target.classList.contains('viewEntry')) {
+            window.location.href = "/detail";
+        }
+    });
+}
 
 
 if(EventPage){
