@@ -1,9 +1,8 @@
 const form = document.getElementById("addEvent");
-let newEvents = JSON.parse(localStorage.getItem('newEvents')) || [];
+let allData = JSON.parse(localStorage.getItem('sportData')) || [];
 const EventPage = document.getElementById('btn_Event');
 const HomePage = document.getElementById('btn_Home');
 const calendar = document.querySelector(".calendar");
-
 
 function fetchJSON () {
     fetch("./sportData.json").then((r) => {
@@ -41,10 +40,6 @@ function fetchJSON () {
 fetchJSON();
 
 
-function setLocalStorage() {
-    localStorage.setItem('newEvents', JSON.stringify(newEvents))
-}
-
 function addEventToCalendar(eventData) {
     const calendar = document.querySelectorAll(".marker");
     calendar.forEach(day => {
@@ -57,9 +52,11 @@ function addEventToCalendar(eventData) {
 }
 
 function loadEventsFromLocalStorage() {
-    newEvents.forEach(eventData => {
-        addEventToCalendar(eventData);
-    });
+    if(allData){
+        allData.forEach(eventData => {
+            addEventToCalendar(eventData);
+        });
+    }
 }
 loadEventsFromLocalStorage();
 
@@ -75,13 +72,13 @@ if(form){
             eventData[key] = value;
         }
 
-        window.location.href = "/";
         console.log('Object:', eventData);
 
-        newEvents.push(eventData);
-        setLocalStorage();
+        allData.push(eventData);
+        localStorage.setItem("sportData", JSON.stringify(allData));
         addEventToCalendar(eventData);
 
+        window.location.href = "/";
         form.reset();
     });
 }
