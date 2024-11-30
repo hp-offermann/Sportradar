@@ -10,38 +10,35 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 5vh;
     flex-direction: column;
+    margin-top: 1vh;
 }
 
 .navbar {
     background-color: #00003c;
-    padding: 15px;
-    width: 100%;
+    padding: 10px 15px;
+    width: 90%;
     border-radius: 5px;
-    margin-bottom: 20px;
-    max-width: 800px;
-    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+    max-height: 50px;
+    align-items: center;
+    max-width: 600px;
     color: white;
+    display: flex;
 }
 
 .button {
     float: left;
-    padding: 15px 20px;
+    padding: 10px 15px;
     background-color: #00003c;
     color: #c80818;
     border-radius: 5px;
     text-decoration: none;
-    font-size: 1.3rem;
+    font-size: 1rem;
     border: none;
     cursor: pointer;
     display: flex;
     gap: 8px;
-}
-
-.button:hover {
-    background-color: #1c1d50;
-    border-radius: 8px;
 }
 
 #btn_Home {
@@ -49,18 +46,20 @@ body {
 }
 
 .calendar {
-    width: 100%;
-    max-width: 800px;
+    width: 90%;
+    max-height: 350px;
+    max-width: 600px;
     border-radius: 10px;
-    overflow: hidden;
+    overflow: auto;
 }
+
 
 .header {
     background-color: #1c1d50;
     color: white;
     text-align: center;
-    padding: 20px;
-    font-size: 2rem;
+    padding: 15px;
+    font-size: 1rem;
     font-weight: bold;
 }
 
@@ -69,6 +68,7 @@ body {
     background-color: #383464;
     color: white;
     font-weight: bold;
+    font-size: 0.6rem ;
     text-align: center;
 }
 
@@ -91,25 +91,23 @@ body {
 .flex-days div {
     flex: 1 0 calc(100% / 7);
     text-align: left;
-    padding: 30px;
-    font-size: 1.3rem;
-    cursor: pointer;
+    padding: 15px;
     color: white;
     border: 1px solid #383464;
+    position: relative;
+    min-height: 50px;
+}
+
+.flex-days div .day-number {
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    font-size: 0.6rem;
 }
 
 .flex-days div:last-child {
     border-right: none;
 }
-
-/*
-.flex-days div:hover {
-    background-color: #c80818;
-    color: white;
-    font-weight: bold;
-    border: none;
-}
-*/
 
 .no-date{
     background-color: #1c1d50;
@@ -121,16 +119,18 @@ body {
     display: flex;
     justify-content: center;
     align-items: flex-start;
+    max-height: 50px;
+    overflow: hidden;
 }
 
 .viewEntry {
-    padding: 0.4rem 0.4rem;
+    padding: 5px 10px;
     background-color: #c80818;
     border: none;
-    border-radius: 50%;
     cursor: pointer;
     margin: 2px;
     flex-shrink: 0;
+    flex-direction: column;
 }
 
 .viewEntry:hover{

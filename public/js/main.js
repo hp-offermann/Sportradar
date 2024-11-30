@@ -72,8 +72,6 @@ if(form){
             eventData[key] = value;
         }
 
-        console.log('Object:', eventData);
-
         allData.push(eventData);
         localStorage.setItem("sportData", JSON.stringify(allData));
         addEventToCalendar(eventData);
