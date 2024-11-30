@@ -1,3 +1,9 @@
+const form = document.getElementById("addEvent");
+let newEvents = JSON.parse(localStorage.getItem('newEvents')) || [];
+const EventPage = document.getElementById('btn_Event');
+const HomePage = document.getElementById('btn_Home');
+
+
 function fetchJSON () {
     fetch("./sportData.json").then((r) => {
         if (!r.ok) {
@@ -5,7 +11,7 @@ function fetchJSON () {
         }
         return r.json();
     }) .then((data) => {
-        console.log(data);
+        //console.log(data);
 
         const calendar = document.querySelectorAll(".marker");
         const sportData = data.data;
@@ -29,27 +35,34 @@ function fetchJSON () {
 }
 fetchJSON();
 
-const EventPage = document.getElementById('btn_Event');
 
-if(EventPage){
-    EventPage.addEventListener('click', () => {
-        window.location.href = `/addEvent`;
+function setLocalStorage() {
+    localStorage.setItem('newEvents', JSON.stringify(newEvents))
+}
+
+function addEventToCalendar(eventData) {
+    const calendar = document.querySelectorAll(".marker");
+    calendar.forEach(day => {
+        if (day.id === eventData.date) {
+            const button = document.createElement("entry-button");
+            button.classList.add("viewEntry");
+            day.appendChild(button);
+        }
     });
 }
 
-const HomePage = document.getElementById('btn_Home');
-
-if(HomePage){
-    HomePage.addEventListener('click', () => {
-        window.location.href = `/`;
+function loadEventsFromLocalStorage() {
+    newEvents.forEach(eventData => {
+        addEventToCalendar(eventData);
     });
 }
+loadEventsFromLocalStorage();
 
-document.addEventListener("DOMContentLoaded", function () {
-    const form = document.getElementById("addEvent");
 
+if(form){
     form.addEventListener('submit', function (e) {
         e.preventDefault();
+
         const formData = new FormData(form);
         const eventData = {};
 
@@ -57,11 +70,30 @@ document.addEventListener("DOMContentLoaded", function () {
             eventData[key] = value;
         }
 
+        window.location.href = "/";
         console.log('Object:', eventData);
+
+        newEvents.push(eventData);
+        setLocalStorage();
+        addEventToCalendar(eventData);
+
         form.reset();
     });
+}
 
-})
+if(EventPage){
+    EventPage.addEventListener('click', () => {
+        window.location.href = `/addEvent`;
+    });
+}
+
+if(HomePage){
+    HomePage.addEventListener('click', () => {
+        window.location.href = `/`;
+    });
+}
+
+
 
 
 
