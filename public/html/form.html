@@ -17,15 +17,16 @@
 <form id="addEvent" class="addEvent">
     <div class="formInfo">
         <p>Please fill out the form to add a new event to the calendar.</p>
-        <p>Sport and Date are required.</p>
+        <p>Eventname and Date are required.</p>
     </div>
 
-    <input class="input" name="sport" type="text" placeholder="Sport" required>
-    <input class="input" name="date" type="date" min="2024-11-01" max="2024-11-30" required>
-    <input class="input" name="time" type="time">
-    <input class="input" name="participants" type="text" placeholder="Participants">
-    <input class="input" name="place" type="text" placeholder="Place">
-    <button class="submitBtn" type="submit">Add Event</button>
+    <input class="input" id="name" name="name" type="text" placeholder="Eventname" required>
+    <input class="input" id="date" name="date" type="date" min="2024-11-01" max="2024-11-30" required>
+    <input class="input" id="sport" name="sport" type="text" placeholder="Sport">
+    <input class="input" id="time" name="time" type="time">
+    <input class="input" id="participants" name="participants" type="text" placeholder="Participants">
+    <input class="input" id="place" name="place" type="text" placeholder="Place">
+    <button class="submitBtn" id="submitBtn" type="submit">Add Event</button>
 </form>
 
 <script src="../js/main.js"></script>
