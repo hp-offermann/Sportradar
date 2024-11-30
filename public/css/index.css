@@ -102,16 +102,44 @@ body {
     border-right: none;
 }
 
+/*
 .flex-days div:hover {
     background-color: #c80818;
     color: white;
     font-weight: bold;
     border: none;
 }
+*/
 
 .no-date{
     background-color: #1c1d50;
     pointer-events: none;
 }
+
+.marker {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.viewEntry {
+    padding: 0.4rem 0.4rem;
+    background-color: #c80818;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    position: absolute;
+    bottom: 10px;
+    right: 10%;
+}
+
+.viewEntry:hover{
+    background-color: #00003c;
+}
+
+
+
+
 
 
