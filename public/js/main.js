@@ -7,14 +7,16 @@ function fetchJSON () {
     }) .then((data) => {
         console.log(data);
 
+        const calendar = document.querySelectorAll(".marker");
         const sportData = data.data;
 
         sportData.forEach(event => {
-            const calendar = document.querySelectorAll(".marker");
             const date = event.dateVenue;
+            console.log(`Eventdate: ${date}`);
 
             calendar.forEach(day => {
                 if (day.id === date) {
+                    console.log(`Marker added for: ${date}`);
                     const button = document.createElement("entry-button");
                     button.classList.add("viewEntry");
 
@@ -22,7 +24,6 @@ function fetchJSON () {
                 }
             });
         });
-
     }).catch((error) =>
         console.log("could not fetch data", error));
 }
