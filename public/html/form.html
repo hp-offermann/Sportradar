@@ -21,12 +21,12 @@
                 <p>Eventname and Date are required.</p>
             </div>
 
-            <input class="input" id="name" name="name" type="text" placeholder="Eventname" required>
+            <input class="input" id="name" name="originCompetitionName" type="text" placeholder="Eventname" required>
             <input class="input" id="date" name="dateVenue" type="date" min="2024-11-01" max="2024-11-30" required>
-            <input class="input" id="sport" name="sport" type="text" placeholder="Sport">
-            <input class="input" id="time" name="time" type="time">
-            <input class="input" id="participants" name="participants" type="text" placeholder="Participants">
-            <input class="input" id="place" name="place" type="text" placeholder="Place">
+            <input class="input" id="sport" name="sport" type="text" placeholder="Sport" required>
+            <input class="input" id="time" name="timeVenueUTC" type="time" required>
+            <input class="input" id="participants" name="participants" type="text" placeholder="Participants" required>
+            <input class="input" id="place" name="stadium" type="text" placeholder="Place" required>
             <button class="submitBtn" id="submitBtn" type="submit">Add Event</button>
         </form>
     </div>

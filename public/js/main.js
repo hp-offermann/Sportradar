@@ -93,7 +93,6 @@ function getEvents() {
 }
 getEvents(year, month);
 
-
 const eventBtn = document.querySelectorAll(".newEvent");
 eventBtn.forEach(eventBtn => {
     eventBtn.addEventListener('click', () => {
@@ -114,23 +113,39 @@ function getDetails() {
 
         const event = sportData.find(e => e.id === Id);
 
-        /*
-        const teamContent = (event.homeTeam?.name && event.awayTeam?.name) ? `${event.homeTeam.name} vs. ${event.awayTeam.name}` : event.homeTeam?.name || event.awayTeam?.name || 'No teams available';
+        const eventDate = new Date(event.dateVenue);
+        const formattedDate = eventDate.toLocaleDateString('de-DE');
+        document.getElementById("Detail-date").textContent = `On: ${formattedDate}`;
 
-        document.getElementById("Detail-team").textContent = teamContent;
+        document.getElementById("Detail-sport").textContent = `${event.sport.charAt(0).toUpperCase() + event.sport.slice(1)}`;
 
+        document.getElementById("Detail-eventname").textContent = `${event.originCompetitionName.charAt(0).toUpperCase() + event.originCompetitionName.slice(1)}`;
 
-         */
+        document.getElementById("Detail-time").textContent = `${event.timeVenueUTC.slice(0, 5)}`;
 
-        /*
-        document.getElementById("Detail-date").textContent = `${event.dateVenue}`;
-        document.getElementById("Detail-eventname").textContent = `${event.originCompetitionName}`;
-        document.getElementById("Detail-sport").textContent = `${event.sport}`;
-        document.getElementById("Detail-result").textContent = `${event.result.homeGoals}-${event.result.awayGoals}`;
-        document.getElementById("Detail-time").textContent = `${event.timeVenueUTC} UTC (-1)`;
-        document.getElementById("Detail-place").textContent = `${event.place}`;
+        if(event.result) {
+            document.getElementById("Detail-result").textContent = `Result: ${event.result.homeGoals}-${event.result.awayGoals}`;
+        } else {
+            document.getElementById("Detail-result").textContent = " ";
+        }
 
-         */
+        if(event.homeTeam?.name && event.awayTeam?.name){
+            document.getElementById("Detail-team").textContent = `${event.homeTeam.name} vs. ${event.awayTeam.name}`;
+        } else if(event.homeTeam?.name){
+            document.getElementById("Detail-team").textContent = `${event.homeTeam.name}`;
+        } else if(event.awayTeam?.name){
+            document.getElementById("Detail-team").textContent = `${event.awayTeam.name}`;
+        } else if(event.participants){
+            document.getElementById("Detail-team").textContent = `${event.participants}`;
+        } else {
+            document.getElementById("Detail-team").textContent = " ";
+        }
+
+        if(event.stadium){
+            document.getElementById("Detail-place").textContent = `${event.stadium}`;
+        } else{
+            document.getElementById("Detail-team").textContent = " ";
+        }
     }
 }
 getDetails()
@@ -159,7 +174,6 @@ if(form){
     });
 
 }
-
 
 if(EventPageBtn){
     EventPageBtn.addEventListener('click', () => {
