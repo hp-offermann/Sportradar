@@ -21,7 +21,7 @@ function renderCalendar(){
 
     let div = "";
 
-    for (let i=firstDayMonth; i > 0; i--){
+    for (let i= firstDayMonth; i > 0; i--){
         div += `<div class="previous-month">${datesLastMonth -i +1}</div>`;
     }
 
