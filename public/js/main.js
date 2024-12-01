@@ -1,16 +1,32 @@
 const form = document.getElementById("addEvent");
-let allData = JSON.parse(localStorage.getItem('sportData')) || [];
 
 const EventPage = document.getElementById('btn_Event');
 const HomePage = document.getElementById('btn_Home');
-
-const calendar = document.querySelector(".calendar");
 const days = document.getElementById("days");
 let date = new Date();
 const year = date.getFullYear();
 const month = 10;
 
-//console.log(date, year, month);
+
+function fetchJSON () {
+    fetch("./sportData.json").then((r) => {
+        if (!r.ok) {
+            throw new Error(`${r.status}`);
+        }return r.json();
+    }) .then((data) => {
+        //console.log(data);
+        if (!localStorage.getItem('sportData')) {
+            const addUUID = data.data.map(item => {
+                item.id = uuidv4();
+                return item;
+            });
+            localStorage.setItem('sportData', JSON.stringify(addUUID));
+        }
+    }).catch((error) =>
+        console.log("could not fetch data", error));
+}
+fetchJSON();
+
 
 function renderCalendar(){
     //the dates of last month that are shown in the new month
@@ -23,7 +39,6 @@ function renderCalendar(){
 
     //the last day of the month is at what position (0-6, 0=sun 6=sat)
     let lastDayOfMonth = new Date(year, month, lastDateMonth).getDay();
-
     let div = "";
 
     //for the days of the previous month
@@ -31,9 +46,10 @@ function renderCalendar(){
         div += `<div class="other-month">${datesLastMonth - i +1}</div>`;
     }
 
-    //for the days of the current month
     for (let i = 1; i <= lastDateMonth; i++) {
-        div += `<div class="current-month">${i}</div>`;
+        //each calendar day has the date as the id
+        const dateString = `${year}-${(month + 1).toString().padStart(2, '0')}-${i.toString().padStart(2, '0')}`;
+        div += `<div class="current-month" id=${dateString}>${i}</div>`;
     }
 
     //for the days of the next month
@@ -44,81 +60,43 @@ function renderCalendar(){
     }
 
     days.innerHTML = div;
-
-    console.log(lastDayOfMonth);
-    console.log(startMonth);
-    console.log(lastDateMonth);
-
 }
 renderCalendar();
 
-
-function fetchJSON () {
-    fetch("./sportData.json").then((r) => {
-        if (!r.ok) {
-            throw new Error(`${r.status}`);
-        }return r.json();
-    }) .then((data) => {
-        //console.log(data);
-        if (!localStorage.getItem('sportData')) {
-            localStorage.setItem('sportData', JSON.stringify(data.data));
-        }
-    }).catch((error) =>
-        console.log("could not fetch data", error));
-}
-fetchJSON();
-
-/*
-function addEventToCalendar(eventData) {
-    const calendar = document.querySelectorAll(".marker");
-    calendar.forEach(day => {
-        if (day.id === eventData.date) {
-            const button = document.createElement("entry-button");
-            button.classList.add("viewEntry");
-            day.appendChild(button);
-        }
-    });
+function uuidv4() {
+    return "10000000-1000-4000-8000-100000000000".replace(/[018]/g, c =>
+        (+c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> +c / 4).toString(16)
+    );
 }
 
-function loadEventsFromLocalStorage() {
-    if(allData){
-        allData.forEach(eventData => {
-            addEventToCalendar(eventData);
+
+function getEvents(year, month) {
+    const calendarDay = document.querySelectorAll(".current-month");
+    const events = JSON.parse(localStorage.getItem('sportData'));
+
+    events.forEach(event => {
+        const dateOfEvent = event.dateVenue;
+
+        calendarDay.forEach(calendarDay => {
+            if (dateOfEvent === calendarDay.id) {
+                const newEvent = document.createElement('button');
+                newEvent.classList.add('newEvent');
+                newEvent.setAttribute('id', event.id);
+                calendarDay.appendChild(newEvent);
+            }
         });
-    }
+    })
+
 }
-loadEventsFromLocalStorage();
+getEvents(year, month);
 
 
-if(form){
-    form.addEventListener('submit', function (e) {
-        e.preventDefault();
-
-        const formData = new FormData(form);
-        const eventData = {};
-
-        for (let [key, value] of formData.entries()) {
-            eventData[key] = value;
-        }
-
-        allData.push(eventData);
-        localStorage.setItem("sportData", JSON.stringify(allData));
-        addEventToCalendar(eventData);
-
-        window.location.href = "/";
-        form.reset();
-    });
-}
-
- */
-
-if(calendar){
-    calendar.addEventListener('click', function(event) {
-        if (event.target.classList.contains('viewEntry')) {
-            window.location.href = "/detail";
-        }
-    });
-}
+const eventBtn = document.querySelectorAll(".newEvent");
+eventBtn.forEach(eventBtn => {
+    eventBtn.addEventListener('click', () => {
+        window.location.href = `/detail`;
+    })
+});
 
 
 if(EventPage){

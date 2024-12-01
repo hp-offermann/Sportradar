@@ -103,5 +103,19 @@ body {
     user-select: none;
 }
 
+.newEvent {
+    padding: 5px;
+    border-radius: 50%;
+    background-color: red;
+    margin-right: 2px;
+    margin-left: 2px;
+    border: none;
+    cursor: pointer;
+}
+
+.newEvent:hover {
+    background-color: #00003c;
+}
+
 
 
