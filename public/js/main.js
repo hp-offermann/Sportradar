@@ -1,38 +1,53 @@
 const form = document.getElementById("addEvent");
 let allData = JSON.parse(localStorage.getItem('sportData')) || [];
 
-
 const EventPage = document.getElementById('btn_Event');
 const HomePage = document.getElementById('btn_Home');
 
 const calendar = document.querySelector(".calendar");
 const days = document.getElementById("days");
-
 let date = new Date();
 const year = date.getFullYear();
-const month = date.getMonth();
+const month = 10;
+
 //console.log(date, year, month);
 
 function renderCalendar(){
+    //the dates of last month that are shown in the new month
     let datesLastMonth = new Date(year, month, 0).getDate();
-    let firstDayMonth = new Date(year, month, 1).getDay();
-    let lastDayMonth = new Date(year, month +1,0).getDate();
-    //console.log(lastDayMonth);
+
+    let startMonth = (new Date(year, month, 1).getDay() + 6) %7;
+
+    //the last date of the month
+    let lastDateMonth = new Date(year, month +1,0).getDate();
+
+    //the last day of the month is at what position (0-6, 0=sun 6=sat)
+    let lastDayOfMonth = new Date(year, month, lastDateMonth).getDay();
 
     let div = "";
 
-    for (let i= firstDayMonth; i > 0; i--){
-        div += `<div class="previous-month">${datesLastMonth -i +1}</div>`;
+    //for the days of the previous month
+    for (let i= startMonth; i > 0; i--){
+        div += `<div class="other-month">${datesLastMonth - i +1}</div>`;
     }
 
-    for (let i = 1; i <= lastDayMonth; i++) {
+    //for the days of the current month
+    for (let i = 1; i <= lastDateMonth; i++) {
         div += `<div class="current-month">${i}</div>`;
+    }
+
+    //for the days of the next month
+    let nextMonth = 1;
+    for (let i= lastDayOfMonth; i < 7; i++) {
+        div += `<div class="other-month">${nextMonth}</div>`;
+        nextMonth++;
     }
 
     days.innerHTML = div;
 
-    console.log(firstDayMonth);
-    console.log(lastDayMonth);
+    console.log(lastDayOfMonth);
+    console.log(startMonth);
+    console.log(lastDateMonth);
 
 }
 renderCalendar();
