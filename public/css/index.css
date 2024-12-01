@@ -26,6 +26,14 @@ body {
     border-radius: 10px;
 }
 
+.main-container {
+    width: 100%;
+    max-width: 600px;
+    background: #00003c;
+    padding: 30px 20px;
+    border-radius: 10px;
+}
+
 .navbar {
     background-color: #1c1d50;
     padding: 15px;

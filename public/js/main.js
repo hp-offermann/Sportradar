@@ -1,7 +1,9 @@
 const form = document.getElementById("addEvent");
 
-const EventPage = document.getElementById('btn_Event');
-const HomePage = document.getElementById('btn_Home');
+const EventPageBtn = document.getElementById('btn_Event');
+const HomePageBtn = document.getElementById('btn_Home');
+const DetailPage = document.getElementById("detail");
+const HomePage = document.getElementById('calendar');
 const days = document.getElementById("days");
 let date = new Date();
 const year = date.getFullYear();
@@ -29,37 +31,39 @@ fetchJSON();
 
 
 function renderCalendar(){
-    //the dates of last month that are shown in the new month
-    let datesLastMonth = new Date(year, month, 0).getDate();
 
-    let startMonth = (new Date(year, month, 1).getDay() + 6) %7;
+    if(HomePage){
+        //the dates of last month that are shown in the new month
+        let datesLastMonth = new Date(year, month, 0).getDate();
 
-    //the last date of the month
-    let lastDateMonth = new Date(year, month +1,0).getDate();
+        let startMonth = (new Date(year, month, 1).getDay() + 6) %7;
 
-    //the last day of the month is at what position (0-6, 0=sun 6=sat)
-    let lastDayOfMonth = new Date(year, month, lastDateMonth).getDay();
-    let div = "";
+        //the last date of the month
+        let lastDateMonth = new Date(year, month +1,0).getDate();
 
-    //for the days of the previous month
-    for (let i= startMonth; i > 0; i--){
-        div += `<div class="other-month">${datesLastMonth - i +1}</div>`;
+        //the last day of the month is at what position (0-6, 0=sun 6=sat)
+        let lastDayOfMonth = new Date(year, month, lastDateMonth).getDay();
+        let div = "";
+
+        //for the days of the previous month
+        for (let i= startMonth; i > 0; i--){
+            div += `<div class="other-month">${datesLastMonth - i +1}</div>`;
+        }
+
+        for (let i = 1; i <= lastDateMonth; i++) {
+            //each calendar day has the date as the id
+            const dateString = `${year}-${(month + 1).toString().padStart(2, '0')}-${i.toString().padStart(2, '0')}`;
+            div += `<div class="current-month" id=${dateString}>${i}</div>`;
+        }
+
+        //for the days of the next month
+        let nextMonth = 1;
+        for (let i= lastDayOfMonth; i < 7; i++) {
+            div += `<div class="other-month">${nextMonth}</div>`;
+            nextMonth++;
+        }
+        days.innerHTML = div;
     }
-
-    for (let i = 1; i <= lastDateMonth; i++) {
-        //each calendar day has the date as the id
-        const dateString = `${year}-${(month + 1).toString().padStart(2, '0')}-${i.toString().padStart(2, '0')}`;
-        div += `<div class="current-month" id=${dateString}>${i}</div>`;
-    }
-
-    //for the days of the next month
-    let nextMonth = 1;
-    for (let i= lastDayOfMonth; i < 7; i++) {
-        div += `<div class="other-month">${nextMonth}</div>`;
-        nextMonth++;
-    }
-
-    days.innerHTML = div;
 }
 renderCalendar();
 
@@ -68,7 +72,6 @@ function uuidv4() {
         (+c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> +c / 4).toString(16)
     );
 }
-
 
 function getEvents(year, month) {
     const calendarDay = document.querySelectorAll(".current-month");
@@ -94,19 +97,50 @@ getEvents(year, month);
 const eventBtn = document.querySelectorAll(".newEvent");
 eventBtn.forEach(eventBtn => {
     eventBtn.addEventListener('click', () => {
-        window.location.href = `/detail`;
+        console.log(eventBtn.id)
+        window.location.href = `/detail?id=${eventBtn.id}`;
     })
 });
 
+function getURL() {
+    const parameters = new URLSearchParams(window.location.search);
+    return parameters.get("id");
+}
 
-if(EventPage){
-    EventPage.addEventListener('click', () => {
+function getDetails() {
+    if(DetailPage){
+        const Id = getURL();
+        const sportData = JSON.parse(localStorage.getItem('sportData'));
+
+        const event = sportData.find(e => e.id === Id);
+
+        const teamContent = (event.homeTeam?.name && event.awayTeam?.name) ? `${event.homeTeam.name} vs. ${event.awayTeam.name}` : event.homeTeam?.name || event.awayTeam?.name || 'No teams available';
+
+        document.getElementById("Detail-team").textContent = teamContent;
+
+
+        /*
+        document.getElementById("Detail-date").textContent = `${event.dateVenue}`;
+        document.getElementById("Detail-eventname").textContent = `${event.originCompetitionName}`;
+        document.getElementById("Detail-sport").textContent = `${event.sport}`;
+        document.getElementById("Detail-result").textContent = `${event.result.homeGoals}-${event.result.awayGoals}`;
+        document.getElementById("Detail-time").textContent = `${event.timeVenueUTC} UTC (-1)`;
+        document.getElementById("Detail-place").textContent = `${event.place}`;
+
+         */
+    }
+}
+getDetails()
+
+
+if(EventPageBtn){
+    EventPageBtn.addEventListener('click', () => {
         window.location.href = `/addEvent`;
     });
 }
 
-if(HomePage){
-    HomePage.addEventListener('click', () => {
+if(HomePageBtn){
+    HomePageBtn.addEventListener('click', () => {
         window.location.href = `/`;
     });
 }
