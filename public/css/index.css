@@ -125,5 +125,56 @@ body {
     background-color: #00003c;
 }
 
+.addEvent {
+    width: 100%;
+    max-width: 600px;
+    background: #1c1d50;
+    padding: 30px 20px;
+    border-radius: 10px;
+}
+
+.formInfo {
+    background-color: #383464;
+    border-left: 5px solid red;
+    padding: 15px;
+    margin-bottom: 16px;
+    border-radius: 8px;
+}
+
+.input {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 1rem;
+    background-color: #1c1d50;
+    border: 1px solid #383464;
+    color: white;
+    border-radius: 8px;
+    font-size: 1rem;
+    color-scheme: dark;
+}
+
+.input:focus{
+    border-color: #c80818;
+    outline: none;
+}
+
+.submitBtn {
+    width: 20%;
+    align-content: center;
+    padding: 14px;
+    background-color: #383464;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4), 0 1px 2px rgba(255, 255, 255, 0.1);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    cursor: pointer;
+}
+
+.submitBtn:hover {
+    background-color: #c80818;
+    font-weight: bold;
+}
+
 
 

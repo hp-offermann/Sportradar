@@ -1,5 +1,4 @@
 const form = document.getElementById("addEvent");
-
 const EventPageBtn = document.getElementById('btn_Event');
 const HomePageBtn = document.getElementById('btn_Home');
 const DetailPage = document.getElementById("detail");
@@ -63,6 +62,7 @@ function renderCalendar(){
             nextMonth++;
         }
         days.innerHTML = div;
+
     }
 }
 renderCalendar();
@@ -73,7 +73,7 @@ function uuidv4() {
     );
 }
 
-function getEvents(year, month) {
+function getEvents() {
     const calendarDay = document.querySelectorAll(".current-month");
     const events = JSON.parse(localStorage.getItem('sportData'));
 
@@ -114,10 +114,13 @@ function getDetails() {
 
         const event = sportData.find(e => e.id === Id);
 
+        /*
         const teamContent = (event.homeTeam?.name && event.awayTeam?.name) ? `${event.homeTeam.name} vs. ${event.awayTeam.name}` : event.homeTeam?.name || event.awayTeam?.name || 'No teams available';
 
         document.getElementById("Detail-team").textContent = teamContent;
 
+
+         */
 
         /*
         document.getElementById("Detail-date").textContent = `${event.dateVenue}`;
@@ -131,6 +134,31 @@ function getDetails() {
     }
 }
 getDetails()
+
+
+if(form){
+    form.addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        const formData = new FormData(form);
+        const eventData = {};
+
+        for (let [key, value] of formData.entries()) {
+            eventData[key] = value;
+        }
+
+        eventData.id = uuidv4();
+        const allData = JSON.parse(localStorage.getItem('sportData')) || [];
+
+        allData.push(eventData);
+        localStorage.setItem("sportData", JSON.stringify(allData));
+
+        window.location.href = `/`;
+        form.reset();
+
+    });
+
+}
 
 
 if(EventPageBtn){
