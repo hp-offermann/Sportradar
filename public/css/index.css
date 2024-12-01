@@ -25,12 +25,36 @@ body {
     border-radius: 10px;
 }
 
+.navbar {
+    background-color: #00003c;
+    padding: 15px;
+    border-radius: 5px;
+    margin-bottom: 1em;
+    color: white;
+}
+
+.navigation {
+    margin-right: 1em;
+    text-decoration: none;
+    color: white;
+}
+
+.navigation:hover {
+    color: red;
+}
+
+.navbar i {
+    margin-right: 0.5em;
+}
+
+
 .header {
     display: flex;
     align-items: center;
     font-size: 25px;
     font-weight: 600;
     color: darkgrey;
+    margin-bottom: 1em;
 }
 
 .weekdays {

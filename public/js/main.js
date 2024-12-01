@@ -52,43 +52,23 @@ function renderCalendar(){
 }
 renderCalendar();
 
-/*
+
 function fetchJSON () {
     fetch("./sportData.json").then((r) => {
         if (!r.ok) {
             throw new Error(`${r.status}`);
-        }
-        return r.json();
+        }return r.json();
     }) .then((data) => {
         //console.log(data);
-
         if (!localStorage.getItem('sportData')) {
             localStorage.setItem('sportData', JSON.stringify(data.data));
         }
-
-        const calendar = document.querySelectorAll(".marker");
-        const sportData = data.data;
-
-        sportData.forEach(event => {
-            const date = event.dateVenue;
-            //console.log(`Eventdate: ${date}`);
-
-            calendar.forEach(day => {
-                if (day.id === date) {
-                    //console.log(`Marker added for: ${date}`);
-                    const button = document.createElement("entry-button");
-                    button.classList.add("viewEntry");
-
-                    day.appendChild(button);
-                }
-            });
-        });
     }).catch((error) =>
         console.log("could not fetch data", error));
 }
 fetchJSON();
 
-
+/*
 function addEventToCalendar(eventData) {
     const calendar = document.querySelectorAll(".marker");
     calendar.forEach(day => {
