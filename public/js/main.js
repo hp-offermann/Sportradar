@@ -126,7 +126,7 @@ function getDetails() {
         if(event.result) {
             document.getElementById("Detail-result").textContent = `Result: ${event.result.homeGoals}-${event.result.awayGoals}`;
         } else {
-            document.getElementById("Detail-result").textContent = " ";
+            document.getElementById("Detail-result").textContent = "";
         }
 
         if(event.homeTeam?.name && event.awayTeam?.name){
@@ -138,13 +138,13 @@ function getDetails() {
         } else if(event.participants){
             document.getElementById("Detail-team").textContent = `${event.participants}`;
         } else {
-            document.getElementById("Detail-team").textContent = " ";
+            document.getElementById("Detail-team").textContent = "";
         }
 
         if(event.stadium){
             document.getElementById("Detail-place").textContent = `${event.stadium}`;
         } else{
-            document.getElementById("Detail-team").textContent = " ";
+            document.getElementById("Detail-place").textContent = "";
         }
     }
 }
