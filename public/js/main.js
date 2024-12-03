@@ -7,6 +7,7 @@ const days = document.getElementById("days");
 let date = new Date();
 const year = date.getFullYear();
 const month = 10;
+const sportData = JSON.parse(localStorage.getItem('sportData'));
 
 
 function fetchJSON () {
@@ -46,19 +47,19 @@ function renderCalendar(){
 
         //for the days of the previous month
         for (let i= startMonth; i > 0; i--){
-            div += `<div class="other-month">${datesLastMonth - i +1}</div>`;
+            div += `<div class="other-month"><div class="calendar-number">${datesLastMonth - i +1}</div></div>`;
         }
 
         for (let i = 1; i <= lastDateMonth; i++) {
             //each calendar day has the date as the id
             const dateString = `${year}-${(month + 1).toString().padStart(2, '0')}-${i.toString().padStart(2, '0')}`;
-            div += `<div class="current-month" id=${dateString}>${i}</div>`;
+            div += `<div class="current-month" id=${dateString}><div class="calendar-number">${i}</div></div>`;
         }
 
         //for the days of the next month
         let nextMonth = 1;
         for (let i= lastDayOfMonth; i < 7; i++) {
-            div += `<div class="other-month">${nextMonth}</div>`;
+            div += `<div class="other-month"><div class="calendar-number">${nextMonth}</div></div>`;
             nextMonth++;
         }
         days.innerHTML = div;
@@ -75,9 +76,8 @@ function uuidv4() {
 
 function getEvents() {
     const calendarDay = document.querySelectorAll(".current-month");
-    const events = JSON.parse(localStorage.getItem('sportData'));
 
-    events.forEach(event => {
+    sportData.forEach(event => {
         const dateOfEvent = event.dateVenue;
 
         calendarDay.forEach(calendarDay => {
@@ -94,7 +94,22 @@ function getEvents() {
 getEvents(year, month);
 
 const eventBtn = document.querySelectorAll(".newEvent");
+
 eventBtn.forEach(eventBtn => {
+    const event = sportData.find(e => e.id === eventBtn.id);
+
+    if(event.homeTeam?.name && event.awayTeam?.name){
+        eventBtn.textContent = `${event.homeTeam.name} vs. ${event.awayTeam.name}`;
+    } else if(event.homeTeam?.name){
+        eventBtn.textContent = `${event.homeTeam.name}`;
+    } else if(event.awayTeam?.name){
+        eventBtn.textContent = `${event.awayTeam.name}`;
+    } else if(event.participants){
+        eventBtn.textContent = `${event.participants}`;
+    } else {
+        eventBtn.textContent = "";
+    }
+
     eventBtn.addEventListener('click', () => {
         console.log(eventBtn.id)
         window.location.href = `/detail?id=${eventBtn.id}`;
@@ -109,7 +124,6 @@ function getURL() {
 function getDetails() {
     if(DetailPage){
         const Id = getURL();
-        const sportData = JSON.parse(localStorage.getItem('sportData'));
 
         const event = sportData.find(e => e.id === Id);
 
@@ -174,6 +188,7 @@ if(form){
     });
 
 }
+
 
 if(EventPageBtn){
     EventPageBtn.addEventListener('click', () => {
