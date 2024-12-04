@@ -90,6 +90,7 @@ getEvents(year, month);
 
 const eventBtn = document.querySelectorAll(".newEvent");
 
+//to display the event name on the marker in the calendar
 eventBtn.forEach(eventBtn => {
     const event = sportData.find(e => e.id === eventBtn.id);
 
@@ -116,6 +117,7 @@ function getURL() {
     return parameters.get("id");
 }
 
+//for the detailpage to display the data
 function getDetails() {
     if(DetailPage){
         const Id = getURL();
@@ -160,6 +162,7 @@ function getDetails() {
 getDetails()
 
 
+//for the form to add an event
 if(form){
     form.addEventListener('submit', function (e) {
         e.preventDefault();
@@ -184,7 +187,7 @@ if(form){
 
 }
 
-
+//for navigation
 if(EventPageBtn){
     EventPageBtn.addEventListener('click', () => {
         window.location.href = `/addEvent`;

@@ -21,6 +21,12 @@ Now you can run the Application with the run button
 ```shell
 node app.js 
 ```
-This is what your output will look like. After clicking the link you will see the calendar.
-
 ![output.png](images/output.png)
+
+After clicking the link you will see the calendar.
+
+## Thoughts on the development 
+
+I have never made a calendar before, so this project was a first for me. I started by making a static 
+calendar because I thought it would be easier, considering that I only should display the month of november.
+During the development was I realising that it was only more difficult and wasn't practical, so I decided to take the dynamic approach. 
