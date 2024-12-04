@@ -4,9 +4,11 @@ const HomePageBtn = document.getElementById('btn_Home');
 const DetailPage = document.getElementById("detail");
 const HomePage = document.getElementById('calendar');
 const days = document.getElementById("days");
+
 let date = new Date();
 const year = date.getFullYear();
 const month = 10;
+
 const sportData = JSON.parse(localStorage.getItem('sportData'));
 
 
@@ -88,9 +90,11 @@ function getEvents() {
 }
 getEvents(year, month);
 
-const eventBtn = document.querySelectorAll(".newEvent");
 
 //to display the event name on the marker in the calendar
+
+const eventBtn = document.querySelectorAll(".newEvent");
+
 eventBtn.forEach(eventBtn => {
     const event = sportData.find(e => e.id === eventBtn.id);
 
