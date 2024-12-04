@@ -19,7 +19,7 @@ function fetchJSON () {
         //console.log(data);
         if (!localStorage.getItem('sportData')) {
             const addUUID = data.data.map(item => {
-                item.id = uuidv4();
+                item.id = crypto.randomUUID();
                 return item;
             });
             localStorage.setItem('sportData', JSON.stringify(addUUID));
@@ -68,11 +68,6 @@ function renderCalendar(){
 }
 renderCalendar();
 
-function uuidv4() {
-    return "10000000-1000-4000-8000-100000000000".replace(/[018]/g, c =>
-        (+c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> +c / 4).toString(16)
-    );
-}
 
 function getEvents() {
     const calendarDay = document.querySelectorAll(".current-month");
@@ -176,7 +171,7 @@ if(form){
             eventData[key] = value;
         }
 
-        eventData.id = uuidv4();
+        eventData.id = crypto.randomUUID();
         const allData = JSON.parse(localStorage.getItem('sportData')) || [];
 
         allData.push(eventData);
