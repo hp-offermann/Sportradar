@@ -1,6 +1,4 @@
 const form = document.getElementById("addEvent");
-const EventPageBtn = document.getElementById('btn_Event');
-const HomePageBtn = document.getElementById('btn_Home');
 const DetailPage = document.getElementById("detail");
 const HomePage = document.getElementById('calendar');
 const days = document.getElementById("days");
@@ -11,25 +9,35 @@ const month = 10;
 
 const sportData = JSON.parse(localStorage.getItem('sportData'));
 
+main();
 
-function fetchJSON () {
-    fetch("./sportData.json").then((r) => {
-        if (!r.ok) {
-            throw new Error(`${r.status}`);
-        }return r.json();
-    }) .then((data) => {
-        //console.log(data);
-        if (!localStorage.getItem('sportData')) {
-            const addUUID = data.data.map(item => {
-                item.id = crypto.randomUUID();
-                return item;
-            });
-            localStorage.setItem('sportData', JSON.stringify(addUUID));
-        }
-    }).catch((error) =>
-        console.log("could not fetch data", error));
+
+async function main() {
+    await fetchJSON();
+
+    if (HomePage) renderCalendar();
+    if (DetailPage) getDetails();
+    if (form) submitForm();
 }
-fetchJSON();
+
+async function fetchJSON() {
+    let data;
+
+    try {
+        data = await (await fetch("./sportData.json")).json();
+    } catch (error) {
+        console.log("Could not get sports data", error);
+        return;
+    }
+
+    if (!localStorage.getItem('sportData')) {
+        const addUUID = data.data.map(item => {
+            item.id = crypto.randomUUID();
+            return item;
+        });
+        localStorage.setItem('sportData', JSON.stringify(addUUID));
+    }
+}
 
 
 function renderCalendar(){
@@ -65,109 +73,109 @@ function renderCalendar(){
             nextMonth++;
         }
         days.innerHTML = div;
-
+        getEvents(year, month);
     }
 }
-renderCalendar();
 
 
 function getEvents() {
     const calendarDay = document.querySelectorAll(".current-month");
 
     sportData.forEach(event => {
-        const dateOfEvent = event.dateVenue;
-
         calendarDay.forEach(calendarDay => {
-            if (dateOfEvent === calendarDay.id) {
+            if (event.dateVenue === calendarDay.id) {
                 const newEvent = document.createElement('button');
                 newEvent.classList.add('newEvent');
                 newEvent.setAttribute('id', event.id);
+
+
+                newEvent.addEventListener('click', () => {
+                    console.log(newEvent.id)
+                    window.location.href = `/detail?id=${newEvent.id}`;
+                })
+
                 calendarDay.appendChild(newEvent);
             }
         });
     })
-
+    displayEventName();
 }
-getEvents(year, month);
 
 
 //to display the event name on the marker in the calendar
+function displayEventName(){
+    const eventBtn = document.querySelectorAll(".newEvent");
 
-const eventBtn = document.querySelectorAll(".newEvent");
+    eventBtn.forEach(eventBtn => {
+        const event = sportData.find(e => e.id === eventBtn.id);
 
-eventBtn.forEach(eventBtn => {
-    const event = sportData.find(e => e.id === eventBtn.id);
+        if (event.homeTeam?.name && event.awayTeam?.name) {
+            eventBtn.textContent = `${event.homeTeam.name} vs. ${event.awayTeam.name}`;
+        } else if (event.homeTeam?.name) {
+            eventBtn.textContent = `${event.homeTeam.name}`;
+        } else if (event.awayTeam?.name) {
+            eventBtn.textContent = `${event.awayTeam.name}`;
+        } else if (event.participants) {
+            eventBtn.textContent = `${event.participants}`;
+        } else {
+            eventBtn.textContent = "";
+        }
+    });
+}
 
-    if(event.homeTeam?.name && event.awayTeam?.name){
-        eventBtn.textContent = `${event.homeTeam.name} vs. ${event.awayTeam.name}`;
-    } else if(event.homeTeam?.name){
-        eventBtn.textContent = `${event.homeTeam.name}`;
-    } else if(event.awayTeam?.name){
-        eventBtn.textContent = `${event.awayTeam.name}`;
-    } else if(event.participants){
-        eventBtn.textContent = `${event.participants}`;
-    } else {
-        eventBtn.textContent = "";
-    }
-
-    eventBtn.addEventListener('click', () => {
-        console.log(eventBtn.id)
-        window.location.href = `/detail?id=${eventBtn.id}`;
-    })
-});
 
 function getURL() {
     const parameters = new URLSearchParams(window.location.search);
     return parameters.get("id");
 }
 
+
 //for the detailpage to display the data
 function getDetails() {
-    if(DetailPage){
-        const Id = getURL();
+    const Id = getURL();
 
-        const event = sportData.find(e => e.id === Id);
+    const event = sportData.find(e => e.id === Id);
 
-        const eventDate = new Date(event.dateVenue);
-        const formattedDate = eventDate.toLocaleDateString('de-DE');
-        document.getElementById("Detail-date").textContent = `On: ${formattedDate}`;
 
-        document.getElementById("Detail-sport").textContent = `${event.sport.charAt(0).toUpperCase() + event.sport.slice(1)}`;
 
-        document.getElementById("Detail-eventname").textContent = `${event.originCompetitionName.charAt(0).toUpperCase() + event.originCompetitionName.slice(1)}`;
+    const eventDate = new Date(event.dateVenue);
+    const formattedDate = eventDate.toLocaleDateString('de-DE');
+    document.getElementById("Detail-date").textContent = `On: ${formattedDate}`;
 
-        document.getElementById("Detail-time").textContent = `${event.timeVenueUTC.slice(0, 5)}`;
+    document.getElementById("Detail-sport").textContent = `${event.sport.charAt(0).toUpperCase() + event.sport.slice(1)}`;
 
-        if(event.result) {
-            document.getElementById("Detail-result").textContent = `Result: ${event.result.homeGoals}-${event.result.awayGoals}`;
-        } else {
-            document.getElementById("Detail-result").textContent = "";
-        }
+    document.getElementById("Detail-eventname").textContent = `${event.originCompetitionName.charAt(0).toUpperCase() + event.originCompetitionName.slice(1)}`;
 
-        if(event.homeTeam?.name && event.awayTeam?.name){
-            document.getElementById("Detail-team").textContent = `${event.homeTeam.name} vs. ${event.awayTeam.name}`;
-        } else if(event.homeTeam?.name){
-            document.getElementById("Detail-team").textContent = `${event.homeTeam.name}`;
-        } else if(event.awayTeam?.name){
-            document.getElementById("Detail-team").textContent = `${event.awayTeam.name}`;
-        } else if(event.participants){
-            document.getElementById("Detail-team").textContent = `${event.participants}`;
-        } else {
-            document.getElementById("Detail-team").textContent = "";
-        }
+    document.getElementById("Detail-time").textContent = `${event.timeVenueUTC.slice(0, 5)}`;
 
-        if(event.stadium){
-            document.getElementById("Detail-place").textContent = `${event.stadium}`;
-        } else{
-            document.getElementById("Detail-place").textContent = "";
-        }
+    if(event.result) {
+        document.getElementById("Detail-result").textContent = `Result: ${event.result.homeGoals}-${event.result.awayGoals}`;
+    } else {
+        document.getElementById("Detail-result").textContent = "";
+    }
+
+    if(event.homeTeam?.name && event.awayTeam?.name){
+        document.getElementById("Detail-team").textContent = `${event.homeTeam.name} vs. ${event.awayTeam.name}`;
+    } else if(event.homeTeam?.name){
+        document.getElementById("Detail-team").textContent = `${event.homeTeam.name}`;
+    } else if(event.awayTeam?.name){
+        document.getElementById("Detail-team").textContent = `${event.awayTeam.name}`;
+    } else if(event.participants){
+        document.getElementById("Detail-team").textContent = `${event.participants}`;
+    } else {
+        document.getElementById("Detail-team").textContent = "";
+    }
+
+    if(event.stadium){
+        document.getElementById("Detail-place").textContent = `${event.stadium}`;
+    } else{
+        document.getElementById("Detail-place").textContent = "";
     }
 }
-getDetails()
 
 
 //for the form to add an event
-if(form){
+function submitForm(){
     form.addEventListener('submit', function (e) {
         e.preventDefault();
 
@@ -186,23 +194,12 @@ if(form){
 
         window.location.href = `/`;
         form.reset();
-
-    });
-
-}
-
-//for navigation
-if(EventPageBtn){
-    EventPageBtn.addEventListener('click', () => {
-        window.location.href = `/addEvent`;
     });
 }
 
-if(HomePageBtn){
-    HomePageBtn.addEventListener('click', () => {
-        window.location.href = `/`;
-    });
-}
+
+
+
 
 
 
