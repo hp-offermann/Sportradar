@@ -25,6 +25,8 @@ node app.js
 
 After clicking the link you will see the calendar.
 
+![result.png](images%2Fresult.png)
+
 ## Thoughts on the development 
 
 I have never made a calendar before, so this project was a first for me. I started by making a static 
