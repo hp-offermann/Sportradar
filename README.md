@@ -25,7 +25,7 @@ node app.js
 
 After clicking the link you will see the calendar.
 
-![result.png](images%2Fresult.png)
+![result.png](images/result.png)
 
 ## Thoughts on the development 
 
